@@ -1,0 +1,1072 @@
+/* ==========================================================================
+   YANZA WELLNESS DESIGN SYSTEM
+   Theme: Ugandan Cultural Integration (Terracotta, Ochre, Sage, Slate)
+   ========================================================================== */
+
+/* 
+   We import Google Fonts first.
+   - Outfit: Geometric and clean, used for headings.
+   - Plus Jakarta Sans: Soft and readable, used for body text.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+/* --------------------------------------------------------------------------
+   1. GLOBAL VARIABLES & DESIGN TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+    /* Font Choices */
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+
+    /* Theme 1: Ugandan Cultural Theme (Default / Landing Page) */
+    --color-terracotta: #8C4F34;
+    --color-ochre-sand: #E8D4BE;
+    --color-sage-green: #6A9085;
+    --color-clay-dark: #3E2419;
+    --color-warm-white: #FAF6F0;
+    
+    /* Theme 2: Circles & Resources Theme */
+    --color-slate-teal: #2A5953;
+    --color-cream-light: #F9F6F0;
+    --color-cta-terracotta: #C87A53;
+    --color-teal-dark: #1A3733;
+
+    /* Theme 3: Support & Counselor Directory Theme */
+    --color-sea-pine: #1B4341;
+    --color-mint-cream: #EAF2F1;
+    --color-muted-gold: #D4AF37;
+    --color-pine-dark: #0F2726;
+
+    /* General Colors */
+    --color-crisis-red: #D9383A;
+    --color-crisis-hover: #B82527;
+    --color-text-dark: #2D2D2D;
+    --color-text-muted: #666666;
+    --color-white: #FFFFFF;
+    
+    /* Default Mapping (Landing Page settings) */
+    --bg-app: var(--color-warm-white);
+    --bg-card: var(--color-white);
+    --text-primary: var(--color-text-dark);
+    --text-accent: var(--color-terracotta);
+    --border-color: rgba(140, 79, 52, 0.15);
+    
+    /* Reusable Design Tokens */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.04);
+    --shadow-hover: 0 14px 40px rgba(140, 79, 52, 0.10);
+    --border-radius: 16px;
+    --border-radius-lg: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   2. DYNAMIC THEME SWAP RULES
+   When the HTML tag has [data-theme="..."], the variables swap colors instantly.
+   -------------------------------------------------------------------------- */
+[data-theme="connect"] {
+    --bg-app: var(--color-cream-light);
+    --bg-card: var(--color-white);
+    --text-primary: var(--color-teal-dark);
+    --text-accent: var(--color-cta-terracotta);
+    --border-color: rgba(42, 89, 83, 0.12);
+    --shadow-hover: 0 14px 40px rgba(42, 89, 83, 0.08);
+}
+
+[data-theme="directory"] {
+    --bg-app: var(--color-mint-cream);
+    --bg-card: var(--color-white);
+    --text-primary: var(--color-pine-dark);
+    --text-accent: var(--color-sea-pine);
+    --border-color: rgba(27, 67, 65, 0.12);
+    --shadow-hover: 0 14px 40px rgba(27, 67, 65, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   3. GLOBAL RESET & BASE STYLES
+   Ensures cross-browser consistency.
+   -------------------------------------------------------------------------- */
+* {
+    box-sizing: border-box; /* Padding is included in element width calculation */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
+    transition: var(--transition-smooth); /* Smooth color swap transitions */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* Sticks footer to bottom if content is short */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text-primary);
+}
+
+a {
+    color: var(--text-accent);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+a:hover {
+    filter: brightness(0.9); /* Subtle hover feedback */
+}
+
+/* --------------------------------------------------------------------------
+   4. NAVIGATION & HEADER LAYOUT
+   -------------------------------------------------------------------------- */
+header {
+    background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
+    backdrop-filter: blur(12px); /* Glassmorphism background blur */
+    -webkit-backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-section a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--color-slate-teal);
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.95rem;
+    position: relative;
+    padding: 0.25rem 0;
+}
+
+/* Nav Link Underline Hover Effect */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--text-accent);
+    transition: var(--transition-smooth);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-links a.active {
+    color: var(--text-accent);
+    font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   5. PINNED CRISIS HELPLINE BUTTON (With Heartbeat Red Pulse)
+   -------------------------------------------------------------------------- */
+.crisis-btn {
+    background-color: var(--color-crisis-red);
+    color: var(--color-white) !important;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(217, 56, 58, 0.3);
+    animation: pulse-red 2s infinite; /* Red pulsing heartbeat effect */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border: none;
+}
+
+.crisis-btn:hover {
+    background-color: var(--color-crisis-hover);
+    box-shadow: 0 6px 20px rgba(217, 56, 58, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Pulse animation keyframes definition */
+@keyframes pulse-red {
+    0% {
+        box-shadow: 0 0 0 0 rgba(217, 56, 58, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(217, 56, 58, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(217, 56, 58, 0);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   6. HERO SECTION LAYOUT (Home / Welcome Page)
+   -------------------------------------------------------------------------- */
+.hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+    min-height: calc(85vh - 80px); /* Makes hero tall on large viewports */
+}
+
+.hero-content {
+    flex: 1.2;
+    max-width: 600px;
+}
+
+.hero-subtitle {
+    color: var(--text-accent);
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    color: var(--color-clay-dark);
+}
+
+.hero-description {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2.5rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.hero-illustration {
+    flex: 0.8;
+    display: flex;
+    justify-content: center;
+}
+
+/* Double border frame wrapping vector illustration */
+.hero-image-wrapper {
+    position: relative;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-hover);
+    border: 8px solid var(--color-ochre-sand);
+}
+
+.hero-image-wrapper svg {
+    display: block;
+}
+
+/* --------------------------------------------------------------------------
+   7. REUSABLE BUTTON COMPONENT
+   -------------------------------------------------------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.85rem 2rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition-smooth);
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--text-accent);
+    color: var(--color-white);
+    box-shadow: 0 6px 20px rgba(140, 79, 52, 0.2);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(140, 79, 52, 0.3);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: rgba(140, 79, 52, 0.05);
+}
+
+/* --------------------------------------------------------------------------
+   8. FEATURES & MODULES GRID (Landing Page Features)
+   -------------------------------------------------------------------------- */
+.features-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 2rem 5rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(285px, 1fr)); /* Auto layouts columns based on size */
+    gap: 2rem;
+}
+
+.feature-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px); /* Gentle hover lift */
+    box-shadow: var(--shadow-hover);
+}
+
+/* Abstract colored background circles inside card icons */
+.feature-icon-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    background-color: rgba(140, 79, 52, 0.08);
+    color: var(--text-accent);
+}
+
+/* Color coding individual cards for aesthetic variety */
+.feature-card:nth-child(1) .feature-icon-box { background-color: rgba(200, 122, 83, 0.12); color: var(--color-cta-terracotta); }
+.feature-card:nth-child(2) .feature-icon-box { background-color: rgba(106, 144, 133, 0.12); color: var(--color-sage-green); }
+.feature-card:nth-child(3) .feature-icon-box { background-color: rgba(42, 89, 83, 0.12); color: var(--color-slate-teal); }
+.feature-card:nth-child(4) .feature-icon-box { background-color: rgba(212, 175, 55, 0.12); color: var(--color-muted-gold); }
+
+.feature-card h3 {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+.feature-card p {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    flex-grow: 1; /* Pushes button link to the bottom of the card */
+}
+
+/* --------------------------------------------------------------------------
+   9. FORUM & RESOURCE HUBS LAYOUT (Two-Column Layout)
+   -------------------------------------------------------------------------- */
+.hub-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: grid;
+    grid-template-columns: 1.8fr 1.2fr; /* 60% Left column (Articles), 40% Right column (Feed) */
+    gap: 3rem;
+}
+
+.hub-title-block {
+    grid-column: 1 / -1; /* Spans across both columns */
+    margin-bottom: 1rem;
+}
+
+.hub-title-block h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.75rem;
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+/* Resource Article Cards styling */
+.article-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Clips image border corners */
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+}
+
+.article-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.article-banner {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+}
+
+.article-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.tag-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* Small tag indicators */
+.tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    background-color: rgba(42, 89, 83, 0.08);
+    color: var(--color-slate-teal);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Trigger Warning special warning color */
+.tag.tw-tag {
+    background-color: rgba(217, 56, 58, 0.08);
+    color: var(--color-crisis-red);
+}
+
+.article-body h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.article-body p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+/* --------------------------------------------------------------------------
+   10. FEED CONTAINER & FORMS (Community Forum Side column)
+   -------------------------------------------------------------------------- */
+.feed-container {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-soft);
+    height: fit-content;
+}
+
+.feed-form {
+    margin-bottom: 2rem;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.input-control {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1.5px solid var(--border-color);
+    background-color: var(--color-warm-white);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+    color: var(--color-text-dark);
+}
+
+.input-control:focus {
+    outline: none;
+    border-color: var(--text-accent);
+    box-shadow: 0 0 0 3px rgba(140, 79, 52, 0.1);
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Individual post block inside sidebar feed */
+.post-card {
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.5rem 0;
+}
+
+.post-card:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    align-items: center;
+}
+
+.post-author {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.post-time {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.post-content {
+    font-size: 0.95rem;
+    color: var(--color-text-dark);
+    word-break: break-word; /* Prevents overflow of long text strings */
+}
+
+/* --------------------------------------------------------------------------
+   11. COUNSELOR DIRECTORY GRID & DETAILS
+   -------------------------------------------------------------------------- */
+.directory-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+.directory-title-block {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.directory-title-block h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.75rem;
+}
+
+.counselors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 2rem;
+}
+
+.counselor-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    gap: 1.5rem;
+    transition: var(--transition-smooth);
+}
+
+.counselor-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.counselor-avatar-col {
+    position: relative;
+    height: fit-content;
+}
+
+/* Small active tracker lights for counselor availability states */
+.status-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #A0AEC0; /* Gray (Offline) */
+    border: 2px solid var(--color-white);
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.status-dot.active {
+    background-color: #48BB78; /* Green (Available) */
+    box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.3);
+}
+
+.status-dot.busy {
+    background-color: #ECC94B; /* Yellow (Busy) */
+    box-shadow: 0 0 0 3px rgba(236, 201, 75, 0.3);
+}
+
+.counselor-info-col {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.counselor-info-col h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+}
+
+.counselor-credentials {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+
+.counselor-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.star-icon {
+    color: var(--color-muted-gold);
+}
+
+.counselor-details {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.counselor-details strong {
+    color: var(--text-primary);
+}
+
+.counselor-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: auto; /* Forces action buttons to sit at card base */
+}
+
+/* Trust block footer for directory */
+.vetting-container {
+    background-color: rgba(27, 67, 65, 0.05);
+    border: 1.5px dashed var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.vetting-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   12. REFLECTION SPACE JOURNAL MODULE
+   -------------------------------------------------------------------------- */
+.journal-layout {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+}
+
+.journal-box {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: 3rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.mood-selector {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+}
+
+.mood-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.mood-option input {
+    display: none; /* Hide raw radio button input */
+}
+
+/* Friendly circular icons wrapping mood emojis */
+.mood-icon {
+    font-size: 2.5rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-warm-white);
+    border: 2px solid transparent;
+    transition: var(--transition-smooth);
+}
+
+/* Style trigger when user selects mood */
+.mood-option input:checked + .mood-icon {
+    background-color: var(--text-accent);
+    color: var(--color-white);
+    transform: scale(1.15); /* Emojis pop slightly when active */
+    box-shadow: 0 6px 15px rgba(140, 79, 52, 0.2);
+}
+
+.mood-label {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.mood-option input:checked ~ .mood-label {
+    color: var(--text-primary);
+}
+
+/* Dual privacy selector toggle box */
+.toggle-group {
+    display: flex;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.toggle-option {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+}
+
+.toggle-option input {
+    display: none;
+}
+
+.toggle-btn-label {
+    display: block;
+    padding: 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+    background-color: var(--color-white);
+}
+
+.toggle-option input:checked + .toggle-btn-label {
+    background-color: var(--text-accent);
+    color: var(--color-white);
+}
+
+/* User diary timeline logs styles */
+.timeline-section {
+    margin-top: 3rem;
+}
+
+.timeline-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.timeline-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    align-items: center;
+}
+
+.timeline-mood {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--color-ochre-sand);
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 600;
+    color: var(--color-clay-dark);
+}
+
+/* --------------------------------------------------------------------------
+   13. SECURITY MODAL WINDOWS (General overlay modal logic)
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+    transition: var(--transition-smooth);
+    /* Simple JS-free modal relies on display states */
+}
+
+/* --------------------------------------------------------------------------
+   14. AUTHENTICATION BOX LAYOUTS (Login & Signup Forms)
+   -------------------------------------------------------------------------- */
+.auth-layout {
+    max-width: 480px;
+    margin: 5rem auto;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+.auth-box {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: 3rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   15. FUNCTIONAL ALERT BANNERS
+   -------------------------------------------------------------------------- */
+.alert-banner {
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert-banner-success {
+    background-color: rgba(72, 187, 120, 0.12);
+    color: #2F855A;
+    border: 1px solid rgba(72, 187, 120, 0.2);
+}
+
+.alert-banner-danger {
+    background-color: rgba(245, 101, 101, 0.12);
+    color: #C53030;
+    border: 1px solid rgba(245, 101, 101, 0.2);
+}
+
+.alert-close {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* --------------------------------------------------------------------------
+   16. FOOTERS & DISCLAIMERS
+   -------------------------------------------------------------------------- */
+footer {
+    background-color: var(--color-clay-dark);
+    color: var(--color-ochre-sand);
+    padding: 4rem 2rem 2rem;
+    margin-top: auto; /* Pushes footer down */
+    border-top: 4px solid var(--color-terracotta);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+}
+
+.footer-logo {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--color-ochre-sand);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-disclaimer-box {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--color-crisis-red);
+    padding: 1.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: rgba(232, 212, 190, 0.9);
+}
+
+.footer-links h4 {
+    color: var(--color-white);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    color: rgba(232, 212, 190, 0.8);
+    font-size: 0.95rem;
+}
+
+.footer-links a:hover {
+    color: var(--color-white);
+    padding-left: 5px; /* Gentle offset animation on hover */
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(232, 212, 190, 0.1);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: rgba(232, 212, 190, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   17. MOBILE & TABLET MEDIA QUERY RESPONSIVENESS OVERRIDES
+   -------------------------------------------------------------------------- */
+@media (max-width: 992px) {
+    /* Medium screens (tablets) */
+    .hero {
+        flex-direction: column-reverse; /* Put illustration on top of text on tablets */
+        padding: 3rem 1.5rem;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .hero-actions {
+        justify-content: center;
+    }
+    
+    .hub-layout {
+        grid-template-columns: 1fr; /* Collapse Left column and sidebar into 1 single column */
+        gap: 2rem;
+    }
+    
+    .counselors-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Small mobile screens */
+    .header-container {
+        padding: 1rem;
+    }
+    
+    nav {
+        gap: 1rem;
+    }
+    
+    .nav-links {
+        display: none; /* In production, we build a toggled sidebar for mobile menus */
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .articles-grid {
+        grid-template-columns: 1fr; /* Stack article cards vertically on mobile */
+    }
+    
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
